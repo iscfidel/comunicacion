@@ -1,0 +1,6 @@
+2025-06-17 16:24:41.087  INFO 11288 --- [main] com.stcm.test.TestApplicationTests       : Starting TestApplicationTests using Java 1.8.0_302 on DESKTOP-L387KI2 with PID 11288 (started by Fidel in C:\xampp\htdocs\test\test)
+2025-06-17 16:24:41.087  INFO 11288 --- [main] com.stcm.test.TestApplicationTests       : No active profile set, falling back to 1 default profile: "default"
+2025-06-17 16:24:43.992  INFO 5356 --- [main] com.stcm.test2.Test2ApplicationTests     : Starting Test2ApplicationTests using Java 1.8.0_302 on DESKTOP-L387KI2 with PID 5356 (started by Fidel in C:\xampp\htdocs\test\test2)
+2025-06-17 16:24:43.998  INFO 5356 --- [main] com.stcm.test2.Test2ApplicationTests     : No active profile set, falling back to 1 default profile: "default"
+2025-06-17 16:24:49.385  INFO 11288 --- [main] com.stcm.test.TestApplicationTests       : Started TestApplicationTests in 9.573 seconds (JVM running for 14.037)
+2025-06-17 16:24:51.595  INFO 5356 --- [main] com.stcm.test2.Test2ApplicationTests     : Started Test2ApplicationTests in 9.529 seconds (JVM running for 14.657)
