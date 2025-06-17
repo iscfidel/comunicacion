@@ -3,6 +3,7 @@ package com.stcm.test2.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.Map;
 
 import org.springframework.http.MediaType;
@@ -16,6 +17,7 @@ public class SaludoProcesarController {
     @PostMapping(value = "/procesar-saludo", consumes = MediaType.APPLICATION_JSON_VALUE, // Asegura que solo acepte JSON
     produces = MediaType.APPLICATION_JSON_VALUE)
     public String procesarSaludo(@RequestBody SaludoProcesarController solicitud) {
+        System.out.println("Procesando solicitud: " + solicitud);
         return "¡Hola, " + solicitud + "! Este saludo viene de API 2.";
     }
 
