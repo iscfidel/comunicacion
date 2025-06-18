@@ -34,30 +34,21 @@ document
 
         // Enviar la solicitud
         fetch(apiUrl, requestOptions)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Error en la respuesta de la red");
+            .then(response => {
+                if (!response.ok) throw new Error("Error en la respuesta");
+                return response.text();  // Primero lee como texto
+            })
+            .then(text => {
+                try {
+                    const data = JSON.parse(text);  // Intenta parsear manualmente
+                    document.getElementById("respuesta").innerHTML = `<p>Éxito: ${data.respuesta}</p>`;
+                } catch (e) {
+                    // Si no es JSON, muestra el texto plano
+                    document.getElementById("respuesta").innerHTML = `<p>Éxito: ${text}</p>`;
                 }
-                // Verificar si la respuesta tiene contenido antes de intentar parsear JSON
-                return response.text().then((text) => {
-                    try {
-                        return text ? JSON.parse(text) : {};
-                    } catch (e) {
-                        throw new Error("La respuesta no es un JSON válido");
-                    }
-                });
             })
-            .then((data) => {
-                // Manejar la respuesta exitosa
-                document.getElementById(
-                    "respuesta"
-                ).innerHTML = `<p>Éxito: ${JSON.stringify(data)}</p>`;
-            })
-            .catch((error) => {
-                // Manejar errores
-                document.getElementById(
-                    "respuesta"
-                ).innerHTML = `<p>Error: ${error.message}</p>`;
-                console.error("Error al enviar el formulario:", error);
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("respuesta").innerHTML = `<p>Error: ${error.message}</p>`;
             });
     });

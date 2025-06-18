@@ -4,9 +4,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Collections;
+import java.util.Map;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -15,23 +20,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 @CrossOrigin(origins = "*") // Para desarrollo
 public class SaludoControler {
 
-    @PostMapping(value = "/saludo", consumes = MediaType.APPLICATION_JSON_VALUE, // Asegura que solo acepte JSON
-    produces = MediaType.APPLICATION_JSON_VALUE)
-    public String saludar(@RequestBody String solicitud) {
-        System.out.println("Solicitud recibida: " + solicitud);
-        // TODO: process POST request
-        // Send the message to API 2...
+    @PostMapping("/saludo")
+    public ResponseEntity<String> saludar(@RequestBody Map<String, String> request) {
+        String mensaje = request.get("mensaje"); // Extrae el campo "mensaje"
+        System.out.println("Solicitud recibida: " + mensaje);
+
         RestTemplate restTemplate = new RestTemplate();
         String url2 = "http://localhost:8082/api/procesar-saludo";
-        // Configura headers
+
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON); // ¡Clave!
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        // Crea la entidad HTTP con headers y cuerpo
-        HttpEntity<String> request = new HttpEntity<>(solicitud, headers);
+        // Envía el mensaje como JSON (no como String crudo)
+        HttpEntity<Map<String, String>> requestApi2 = new HttpEntity<>(
+                Collections.singletonMap("mensaje", mensaje), // Equivalente a Map.of() en Java 8
+                headers);
+        String response = restTemplate.postForObject(url2, requestApi2, String.class);
+        System.out.println("Respuesta de la API 2: " + response);
 
-        String response = restTemplate.postForObject(url2, request, String.class);
-        return response;
+        return ResponseEntity.ok().body(response);
     }
 
 }
